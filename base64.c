@@ -10,11 +10,7 @@ based on sources from internet
 static const unsigned char b64[] =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/" ;
 
-static const unsigned char ub64[] = {
-    0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 
-    0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 
-    0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 
-    0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 
+static const unsigned char ub64[] = {   
     0,   0,   0,  62,   0,   0,   0,  63,  52,  53, 
     54,  55,  56,  57,  58,  59,  60,  61,   0,   0, 
     0,   0,   0,   0,   0,   0,   1,   2,   3,   4, 
@@ -23,20 +19,7 @@ static const unsigned char ub64[] = {
     25,   0,   0,   0,   0,   0,   0,  26,  27,  28, 
     29,  30,  31,  32,  33,  34,  35,  36,  37,  38, 
     39,  40,  41,  42,  43,  44,  45,  46,  47,  48, 
-    49,  50,  51,   0,   0,   0,   0,   0,   0,   0, 
-    0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 
-    0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 
-    0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 
-    0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 
-    0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 
-    0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 
-    0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 
-    0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 
-    0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 
-    0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 
-    0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 
-    0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 
-    0,   0,   0,   0,   0,   0,
+    49,  50,  51,   0,   0,   0,   0,   0,   0,   0    
 }; 
 
 int base64_encode_length (unsigned char *input, int len)
@@ -116,10 +99,10 @@ int base64_decode( unsigned char *input, int len, unsigned char *output )
    // lets decode
 
     for ( cn = 0; cn <= len - 4 - pad ; cn += 4 ) {
-        a = ub64[input[cn]];
-        b = ub64[input[cn + 1]];
-        c = ub64[input[cn + 2]];
-        d = ub64[input[cn + 3]];
+        a = ub64[input[cn] - 40];
+        b = ub64[input[cn + 1] - 40];
+        c = ub64[input[cn + 2] - 40];
+        d = ub64[input[cn + 3] - 40];
 
         output[cb++] = (a << 2) | (b >> 4) ;
         output[cb++] = (b << 4) | (c >> 2) ;
@@ -127,15 +110,15 @@ int base64_decode( unsigned char *input, int len, unsigned char *output )
     }
 
     if ( pad == 1 ) {
-        a = ub64[input[cn]];
-        b = ub64[input[cn + 1]];
-        c = ub64[input[cn + 2]];
+        a = ub64[input[cn] - 40];
+        b = ub64[input[cn + 1] - 40];
+        c = ub64[input[cn + 2] - 40];
 
         output[cb++] = (a << 2) | (b >> 4) ;
         output[cb++] = (b << 4) | (c >> 2) ;
     } else if ( pad == 2 ) {
-        a = ub64[input[cn]];
-        b = ub64[input[cn + 1]];
+        a = ub64[input[cn] - 40];
+        b = ub64[input[cn + 1] - 40];
 
         output[cb++] = (a << 2) | (b >> 4) ;
     }

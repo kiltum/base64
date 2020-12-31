@@ -4,7 +4,7 @@
 
 int main (void) {
 
-unsigned char input[]="Text String for \t \n www";
+unsigned char input[]="lets look for back";
 
 unsigned char output[256]="";
 
