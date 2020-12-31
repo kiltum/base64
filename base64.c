@@ -6,9 +6,8 @@ based on sources from internet
 */
 
 #include "base64.h"
-#include <string.h>
 
-static const char *b64 =
+static const unsigned char b64[] =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/" ;
 
 static const unsigned char ub64[] = {
@@ -83,6 +82,15 @@ int base64_encode( unsigned char *input, int len, unsigned char *output )
     return rc ;
 }
 
+int strexist( unsigned char t)
+{
+    for(int i=0; i< sizeof(b64); i++)
+    {
+        if(b64[i]==t) return 0;
+    }
+    return 1;
+}
+
 int base64_decode( unsigned char *input, int len, unsigned char *output )
 {
     int cb = 0;
@@ -98,9 +106,9 @@ int base64_decode( unsigned char *input, int len, unsigned char *output )
             if (pad > 2) { // invalid padding!
                 return 0;
             }
-        } else if (strchr(b64, input[i]) == NULL) { // bad input char
+        } else if (strexist(input[i]) == 1) { // bad input char
             return 0;
-        } else if (pad) { // bad input
+        } else if (pad) { // bad input 
             return 0;
         }
     }
